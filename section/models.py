@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Sections(models.Model):
+    icons = models.ImageField()
     name = models.CharField(max_length=225)
     description = models.TextField()
     place_1 = models.IntegerField()
