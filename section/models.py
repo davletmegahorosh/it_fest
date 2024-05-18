@@ -1,5 +1,6 @@
-import unidecode
 from django.db import models
+from django.utils.text import slugify
+from unidecode import unidecode
 
 
 class Sections(models.Model):
@@ -18,10 +19,8 @@ class Sections(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.link:
+        if not self.path:
             transliterated_name = unidecode(self.name)
             self.link = slugify(transliterated_name)
 
         super().save(*args, **kwargs)
-
-
