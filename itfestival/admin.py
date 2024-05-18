@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Partners, Sponsors, Speaker
+from .models import Partner, Sponsor, Speaker
 
-admin.site.register(Partners)
-admin.site.register(Sponsors)
+admin.site.register(Partner)
+admin.site.register(Sponsor)
 admin.site.register(Speaker)
 

@@ -10,7 +10,7 @@ class Speaker(models.Model):
         return self.name
 
 
-class Sponsors(models.Model):
+class Sponsor(models.Model):
     name = models.CharField(max_length=255)
     photo = models.ImageField()
     url = models.URLField(max_length=200)
@@ -19,7 +19,7 @@ class Sponsors(models.Model):
         return self.name
 
 
-class Partners(models.Model):
+class Partner(models.Model):
     name = models.CharField(max_length=255)
     photo = models.ImageField()
     url = models.URLField(max_length=200)
