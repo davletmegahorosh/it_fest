@@ -4,7 +4,7 @@ from unidecode import unidecode
 
 
 class Sections(models.Model):
-    icons = models.ImageField()
+    icon = models.ImageField()
     name = models.CharField(max_length=225)
     description = models.TextField()
     place_1 = models.IntegerField()
@@ -21,6 +21,6 @@ class Sections(models.Model):
     def save(self, *args, **kwargs):
         if not self.path:
             transliterated_name = unidecode(self.name)
-            self.link = slugify(transliterated_name)
+            self.path = slugify(transliterated_name)
 
         super().save(*args, **kwargs)
