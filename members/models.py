@@ -5,7 +5,7 @@ import random
 
 class Members(models.Model):
     name = models.CharField(max_length=225)
-    email = models.EmailField(max_length=225)
+    email = models.EmailField(max_length=225, unique=True)
     confirmation_code = models.IntegerField(editable=False)
     accepted = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)

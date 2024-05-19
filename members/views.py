@@ -1,8 +1,7 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
 from .models import Members
 from .serializers import MembersSerializer, MembersActivationSerializer
 from members.email import send_activation_email
@@ -10,7 +9,7 @@ from members.email import send_activation_email
 class MembersRegistrationAPIView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = MembersSerializer(data=request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             member = serializer.save()
             send_activation_email(member.email, member.confirmation_code)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
