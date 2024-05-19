@@ -6,4 +6,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/section/', include('section.urls')),
     path('api/info/', include('itfestival.urls')),
+
 ]
