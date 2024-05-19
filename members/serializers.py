@@ -1,24 +1,37 @@
 from rest_framework import serializers
 from .models import Members
 from section.models import Sections
-
+from members.email import check_email_existence
 
 class MembersSerializer(serializers.ModelSerializer):
-    section_name = serializers.CharField(max_length=225)
+    section = serializers.CharField(max_length=225)
 
     class Meta:
         model = Members
-        fields = ['name', 'email', 'section_name']
+        fields = ['name', 'email', 'section']
 
-    def validate_section_name(self, value):
+    def validate(self, data):
+        errors = {}
+
+        if Members.objects.filter(email=data['email']).exists():
+            errors['email'] = "A member with this email already exists."
+
+        elif not check_email_existence(data['email']):
+            errors['email'] = "This email does not exists"
+
+        section_name = data.get('section')
         try:
-            Sections.objects.get(name=value)
+            Sections.objects.get(name=section_name)
         except Sections.DoesNotExist:
-            raise serializers.ValidationError("Invalid section name.")
-        return value
+            errors['section'] = "Invalid section name."
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return data
 
     def create(self, validated_data):
-        section_name = validated_data.pop('section_name', None)
+        section_name = validated_data.pop('section', None)
 
         try:
             section = Sections.objects.get(name=section_name)
@@ -29,6 +42,20 @@ class MembersSerializer(serializers.ModelSerializer):
         member = Members.objects.create(**validated_data)
         return member
 
+    def is_valid(self, raise_exception=False):
+        try:
+            super(MembersSerializer, self).is_valid(raise_exception=True)
+        except serializers.ValidationError as exc:
+            errors = exc.detail
+            if len(errors) == 1:
+                key = list(errors.keys())[0]
+                detail = {key: errors[key]}
+            else:
+                detail = errors
+            if raise_exception:
+                raise serializers.ValidationError(detail)
+            return False
+        return True
 
 class MembersActivationSerializer(serializers.Serializer):
     email = serializers.EmailField()
