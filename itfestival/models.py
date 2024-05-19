@@ -2,9 +2,9 @@ from django.db import models
 
 
 class Speaker(models.Model):
-    name = models.CharField
-    information = models.TextField
-    photo = models.ImageField
+    name = models.CharField(max_length=255)
+    information = models.TextField()
+    photo = models.ImageField()
 
     def __str__(self):
         return self.name

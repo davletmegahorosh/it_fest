@@ -7,6 +7,7 @@ from .serializers import MembersSerializer, MembersActivationSerializer
 from members.email import send_activation_email
 
 class MembersRegistrationAPIView(APIView):
+    serializer_class = MembersSerializer
     def post(self, request, *args, **kwargs):
         serializer = MembersSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -17,6 +18,7 @@ class MembersRegistrationAPIView(APIView):
 
 
 class MembersActivationAPIView(APIView):
+    serializer_class = MembersActivationSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = MembersActivationSerializer(data=request.data)
