@@ -4,11 +4,11 @@ from section.models import Sections
 
 
 class MembersSerializer(serializers.ModelSerializer):
-    section_name = serializers.CharField(max_length=225)
+    section = serializers.CharField(max_length=225)
 
     class Meta:
         model = Members
-        fields = ['name', 'email', 'section_name']
+        fields = ['name', 'email', 'section']
 
     def validate_section_name(self, value):
         try:
@@ -18,7 +18,7 @@ class MembersSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        section_name = validated_data.pop('section_name', None)
+        section_name = validated_data.pop('section', None)
 
         try:
             section = Sections.objects.get(name=section_name)
