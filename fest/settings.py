@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'rest_framework',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,3 +115,11 @@ MEDIA_ROOT = BASE_DIR /"media"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "🍒",
+    "site_brand": "IT FEST 🌌",
+    "navigation_expanded": False,
+    "hide_apps": ["auth", "admin"],
+}
